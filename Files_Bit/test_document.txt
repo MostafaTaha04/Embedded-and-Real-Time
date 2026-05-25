@@ -1,0 +1,4 @@
+Hello World
+This is a test file for our C program.
+We are counting lines, words, and characters.
+Good luck!

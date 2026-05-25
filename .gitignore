@@ -1,0 +1,7 @@
+*.o
+*.so
+*.out
+pipe_test
+mq_test
+sig_test
+ctrlc_test
