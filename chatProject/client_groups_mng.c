@@ -14,8 +14,8 @@ ClientGroupsMng *cgm_create(void) {
 
 static void _free_cg(void *ptr) {
     ClientGroup *cg = (ClientGroup *)ptr;
-    if (cg->sender_pid   > 0) kill(cg->sender_pid,   SIGTERM);
-    if (cg->receiver_pid > 0) kill(cg->receiver_pid, SIGTERM);
+    if (cg->sender_pid   > 0) kill(cg->sender_pid,   SIGKILL);
+    if (cg->receiver_pid > 0) kill(cg->receiver_pid, SIGKILL);
     free(cg);
 }
 
@@ -47,8 +47,8 @@ ClientGroup *cgm_get(ClientGroupsMng *cgm, const char *name) {
 int cgm_remove(ClientGroupsMng *cgm, const char *name) {
     ClientGroup *cg = cgm_get(cgm, name);
     if (!cg) return -1;
-    if (cg->sender_pid   > 0) kill(cg->sender_pid,   SIGTERM);
-    if (cg->receiver_pid > 0) kill(cg->receiver_pid, SIGTERM);
+    if (cg->sender_pid   > 0) kill(cg->sender_pid,   SIGKILL);
+    if (cg->receiver_pid > 0) kill(cg->receiver_pid, SIGKILL);
     return hash_remove(cgm->groups, name, free);
 }
 
@@ -60,8 +60,8 @@ static void _kill_all_cb(const char *k, void *v, void *arg) {
     ClientGroup *cg = (ClientGroup *)v;
     (void)k;
     (void)arg;
-    if (cg->sender_pid   > 0) kill(cg->sender_pid,   SIGTERM);
-    if (cg->receiver_pid > 0) kill(cg->receiver_pid, SIGTERM);
+    if (cg->sender_pid   > 0) kill(cg->sender_pid,   SIGKILL);
+    if (cg->receiver_pid > 0) kill(cg->receiver_pid, SIGKILL);
 }
 
 void cgm_remove_all(ClientGroupsMng *cgm) {
