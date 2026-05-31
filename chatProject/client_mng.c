@@ -111,13 +111,15 @@ static int _open_group_windows(ClientMng *cm, const char *gname,
     mq_id = msgget(MQ_KEY, IPC_CREAT | 0666);
     if (mq_id < 0) { perror("msgget"); return -1; }
 
+    /* Send Window */
     snprintf(cmd, sizeof(cmd),
-        "gnome-terminal --title='SEND:%s' -- ./mc_sender %s %d %d &",
-        gname, mc_ip, mc_port, mq_id);
+        "xterm -fa 'Monospace' -fs 11 -T 'SEND:%s' -e ./mc_sender %s %d %d &",
+        gname, mc_ip, mc_port, mq_id, cm->username);
     system(cmd);
 
+    /* Receive Window */
     snprintf(cmd, sizeof(cmd),
-        "gnome-terminal --title='RECV:%s' -- ./mc_receiver %s %d %d &",
+        "xterm -fa 'Monospace' -fs 11 -T 'RECV:%s' -e ./mc_receiver %s %d %d &",
         gname, mc_ip, mc_port, mq_id);
     system(cmd);
 

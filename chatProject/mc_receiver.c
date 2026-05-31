@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
                      (struct sockaddr *)&src, &slen);
         if (n < 0) break;
         buf[n] = '\0';
-        printf("[%s] %s\n", inet_ntoa(src.sin_addr), buf);
+        printf("%s\n", buf);
         fflush(stdout);
     }
     close(sock);
