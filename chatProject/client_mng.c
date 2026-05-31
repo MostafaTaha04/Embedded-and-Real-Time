@@ -140,6 +140,15 @@ static int _open_group_windows(ClientMng *cm, const char *gname,
 int client_mng_create_group(ClientMng *cm, const char *gname) {
     ClientRequest  req;
     ServerResponse res;
+
+    /* --- THE GUARD CLAUSE --- */
+    if (cgm_get(cm->groups, gname) != NULL) {
+        strncpy(_last_msg, "Error: You are already in this group!", MAX_MSG_LEN - 1);
+        _last_msg[MAX_MSG_LEN - 1] = '\0';
+        return -1;
+    }
+    /* ------------------------ */
+
     memset(&req, 0, sizeof(req));
     memset(&res, 0, sizeof(res));
     req.type = MSG_CREATE_GROUP;
@@ -154,6 +163,15 @@ int client_mng_create_group(ClientMng *cm, const char *gname) {
 int client_mng_join_group(ClientMng *cm, const char *gname) {
     ClientRequest  req;
     ServerResponse res;
+
+    /* --- THE GUARD CLAUSE --- */
+    if (cgm_get(cm->groups, gname) != NULL) {
+        strncpy(_last_msg, "Error: You are already in this group!", MAX_MSG_LEN - 1);
+        _last_msg[MAX_MSG_LEN - 1] = '\0';
+        return -1;
+    }
+    /* ------------------------ */
+
     memset(&req, 0, sizeof(req));
     memset(&res, 0, sizeof(res));
     req.type = MSG_JOIN_GROUP;
